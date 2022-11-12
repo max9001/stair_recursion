@@ -16,61 +16,71 @@ cs(4)
     Arr [ cs(0) , cs(1) , ... ]
 
 */
-
-
 #include "stair.h"
 
-unsigned long long countStepCombinations(int numOfStairs){
+int countStepCombinations(int numOfStairs){
     int* memoization = new int[numOfStairs + 1];
-    // for (int i = 0; i <= numOfStairs; i++){
-    //     memoization[i] = -1;
-    // }
-    // memoization[0] = 1;
-    // //return countStepCombinationsHelper(numOfStairs, comboCount);
-
-    return countStepCombinationsHelper(numOfStairs, 0, 0, memoization);
+    for (int i = 0; i <= numOfStairs; i++){
+        memoization[i] = -1;
+    }
+    memoization[0] = 1;
+    
+    return countStepCombinationsHelper(numOfStairs, 0, 1, memoization);
 }
 
-unsigned long long countStepCombinationsHelper(int numOfStairs, unsigned long long comboCount, int index, int* memoization){
 
-    // if (memoization[index] != -1){
-    //     return memoization[index];
-    // }
 
+
+int countStepCombinationsHelper(int numOfStairs, int comboCount, int index, int* memoization){
+    
+    cout << "hey" << endl;
+    
+    if(memoization[index] != -1){
+        cout << "yo" << endl;
+        return memoization[index];
+    }
+
+
+    if(index > numOfStairs){
+        cout << "hello" << endl;
+        return 0;
+    }
+
+
+    else if(index == numOfStairs){
+        cout << "sup" << endl;
+        return 1;
+    }
+
+
+    memoization[index]= countStepCombinationsHelper(numOfStairs, comboCount, index + 1, memoization) + 
+                        countStepCombinationsHelper(numOfStairs, comboCount, index + 2, memoization) + 
+                        countStepCombinationsHelper(numOfStairs, comboCount, index + 3, memoization);
+    
+    memoization[index] = comboCount;
+    return comboCount;
+}
+
+
+
+
+
+#pragma region hi
+int countStepCombinationsHelper(int numOfStairs, int comboCount){
+    
     if (numOfStairs == 0){
         return 1;
     }
+    
     else if (numOfStairs < 0){
         return 0;
     }
-    else if ()
 
-    // comboCount +=   countStepCombinationsHelper(numOfStairs -1, comboCount, index +1 , memoization) + 
-    //                 countStepCombinationsHelper(numOfStairs -2, comboCount, index +1 , memoization) + 
-    //                 countStepCombinationsHelper(numOfStairs -3, comboCount, index +1 , memoization);
+    comboCount +=   countStepCombinationsHelper(numOfStairs -1, comboCount) + 
+                    countStepCombinationsHelper(numOfStairs -2, comboCount) + 
+                    countStepCombinationsHelper(numOfStairs -3, comboCount);
+
 
     return comboCount;
-
 }
-
-
-
-
-
-
-
-// unsigned long long countStepCombinationsHelper(int numOfStairs, int comboCount){
-
-
-//     if (numOfStairs == 0){
-//         return 1;
-//     }
-
-
-//     comboCount +=   countStepCombinationsHelper(numOfStairs -1, comboCount) + 
-//                     countStepCombinationsHelper(numOfStairs -2, comboCount) + 
-//                     countStepCombinationsHelper(numOfStairs -3, comboCount);
-
-
-//     return comboCount;
-// }
+#pragma endregion 
